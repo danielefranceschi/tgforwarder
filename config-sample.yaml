@@ -1,0 +1,7 @@
+bot_token: "1234567890:AAjskldjglksrjgkrklgj"
+enabled_user_ids:
+  - 1234567890
+webhooks:
+  - name: "abc"
+    url: "https://webhook.site/your-webhook-url"
+    matching_string: "abc"
