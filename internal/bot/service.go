@@ -3,6 +3,7 @@ package bot
 import (
 	"bytes"
 	"context"
+	"crypto/tls"
 	"encoding/json"
 	"fmt"
 	"hash/fnv"
@@ -85,7 +86,15 @@ func (f *Forwarder) sendOnce(ctx context.Context, webhook WebhookConfig, body []
 	if webhook.Header != "" {
 		req.Header.Set(webhook.Header, webhook.HeaderValue)
 	}
-
+	if webhook.Insecure {
+		tr := &http.Transport{
+			TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+		}
+		f.HTTPClient.Transport = tr
+		defer func() {
+			f.HTTPClient.Transport = nil
+		}()
+	}
 	resp, err := f.HTTPClient.Do(req)
 	if err != nil {
 		return fmt.Errorf("perform request: %w", err)

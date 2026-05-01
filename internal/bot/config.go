@@ -20,6 +20,7 @@ type WebhookConfig struct {
 	MatchingString string `yaml:"matching_string"`
 	Header         string `yaml:"header,omitempty"`
 	HeaderValue    string `yaml:"header_value,omitempty"`
+	Insecure       bool   `yaml:"insecure,omitempty"`
 }
 
 func LoadConfig(path string) (Config, error) {
